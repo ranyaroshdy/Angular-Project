@@ -70,7 +70,7 @@ namespace AngularProjectAPI
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.AllowAnyOrigin();
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); 
                 });
             });
         }
