@@ -33,6 +33,8 @@ namespace AngularProjectAPI.Controllers
             {
                 UserName = registrationModel.UserName,
                 Email = registrationModel.Email,
+                PhoneNumber = registrationModel.PhoneNumber,
+                Gender = registrationModel.Gender,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
             var result = await UserManager.CreateAsync(user, registrationModel.Password);
