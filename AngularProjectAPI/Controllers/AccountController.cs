@@ -50,25 +50,27 @@ namespace AngularProjectAPI.Controllers
             var user = await UserManager.FindByNameAsync(loginModel.UserName);
             if(user!=null && await UserManager.CheckPasswordAsync(user, loginModel.Password))
             {
+                var userRole = await UserManager.GetRolesAsync(user);
                 var claims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Typ,userRole[0]),
                 };
                 var signingkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySuperSecurityKey"));
                 var token= new JwtSecurityToken
                 (
-
                    audience:"http://oec.com",
                    issuer: "http://oec.com",
-                   expires:DateTime.Now.AddDays(30),
+                   expires:DateTime.Now.AddHours(1),
                    claims:claims,
+                 
                    signingCredentials:new Microsoft.IdentityModel.Tokens.SigningCredentials(signingkey,SecurityAlgorithms.HmacSha256)
                 );
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token),
                 expiration=token.ValidTo});
             }
-            return Unauthorized();
+            return BadRequest(new { message = "Username or password is incorrect" });
         }
 
 
