@@ -13,5 +13,8 @@ namespace AngularProjectAPI.Models.Repository
         void Add(T Object);
         void Update(T Object);
         void Delete(T id);
+        T GetSpesificOrderID(string userid);
+        Tkey GetProductQuantity(Tkey ID1, Tkey ID2);
+        Tkey GetTotalQuantity(TkeySec UserID);
     }
 }

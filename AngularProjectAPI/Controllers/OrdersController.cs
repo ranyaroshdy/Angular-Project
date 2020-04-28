@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AngularProjectAPI.Models;
 using AngularProjectAPI.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularProjectAPI.Controllers
@@ -14,10 +17,12 @@ namespace AngularProjectAPI.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IRepository<Order, int, string> OrderRepository;
+        private readonly UserManager<User> UserManagerr;
 
-        public OrdersController(IRepository<Order, int, string> _OrderRepository)
+        public OrdersController(IRepository<Order, int, string> _OrderRepository, UserManager<User> _UserManager)
         {
             OrderRepository = _OrderRepository;
+            UserManagerr = _UserManager;
         }
         [HttpGet]
         public ActionResult<IEnumerable<Order>> GetOrders()
@@ -40,8 +45,31 @@ namespace AngularProjectAPI.Controllers
 
             return order;
         }
+        
+        [Route("GetCurrentOrder/{Userid}")]
+        [HttpGet]
+        public ActionResult<int> GetCurrentOrder(string Userid)
+        {
+            var order = OrderRepository.GetSpesificOrderID(Userid);
+            if (order == null)
+            {
+                return 0;
+            }
+            return order.OrderID;
+        }
+        
+        [Route("GetTotalQuantity/{Userid}")]
+        [HttpGet]
+        public async Task<ActionResult<int>> GetTotalQuantity(string Userid)
+        {
+            var user= await UserManagerr.GetUserAsync(HttpContext.User);
+            //var userIdd = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-     
+            var sum = OrderRepository.GetTotalQuantity(Userid);
+            return sum;
+        }
+
         [HttpPut("{id}")]
         public IActionResult PutOrder(int id, Order order)
         {

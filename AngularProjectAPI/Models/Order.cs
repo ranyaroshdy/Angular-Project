@@ -22,6 +22,8 @@ namespace AngularProjectAPI.Models
         public string OrderOwnerID { get; set; }
         public virtual User OrderOwner { get; set; }
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public bool checkout { get; set; } = false;
+
 
     }
 }

@@ -57,12 +57,12 @@ namespace AngularProjectAPI.Controllers
         //}
 
 
-        //[HttpPost]
-        //public ActionResult<Order> PostOrder(Order order)
-        //{
-        //    OrderRepository.Add(order);
-        //    return CreatedAtAction("GetOrder", new { id = order.OrderID }, order);
-        //}
+        [HttpPost]
+        public ActionResult<OrderDetails> PostOrderDetails(OrderDetails orderDeatils)
+        {
+            OrderDetailsRepository.Add(orderDeatils);
+            return CreatedAtAction("PostOrderDetails", orderDeatils);
+        }
 
         [HttpDelete("{id}")]
         public ActionResult<OrderDetails> DeleteOrder(int id)
@@ -83,5 +83,12 @@ namespace AngularProjectAPI.Controllers
                 return false;
             return true;
         }
+        [Route("GetProductQuantity/ProductID={productID}&OrderID={orderID}")]
+        [HttpGet]
+        public ActionResult<int> GetProductQuantity(int productID,int orderID)
+        {
+            return OrderDetailsRepository.GetProductQuantity(productID, orderID);
+        }
+
     }
 }

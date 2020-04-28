@@ -23,5 +23,7 @@ namespace AngularProjectAPI.Models
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
         public bool IsCanceled { get; set; } = false;
+
+        
     }
 }

@@ -4,14 +4,16 @@ using AngularProjectAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AngularProjectAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200427013644_orderMG")]
+    partial class orderMG
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +64,6 @@ namespace AngularProjectAPI.Migrations
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("checkout")
-                        .HasColumnType("bit");
-
                     b.HasKey("OrderID");
 
                     b.HasIndex("OrderOwnerID");
@@ -85,6 +84,9 @@ namespace AngularProjectAPI.Migrations
 
                     b.Property<short>("Quantity")
                         .HasColumnType("smallint");
+
+                    b.Property<bool>("checkout")
+                        .HasColumnType("bit");
 
                     b.HasKey("OrderID", "ProductID");
 

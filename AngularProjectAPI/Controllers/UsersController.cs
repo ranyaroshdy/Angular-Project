@@ -53,8 +53,23 @@ namespace AngularProjectAPI.Controllers
 
             return User;
         }
+        [HttpGet()]
+        [Route("GetCurrentUserInfo")]
+        public ActionResult<User> GetCurrentUserInfo()
+        {
+            var UserClaims = HttpContext.User.Claims.ToList();
+            var UserID = UserClaims[4].Value;
 
+            var User = UserRepository.GetById(UserID);
 
+            if (User == null)
+            {
+                return NotFound();
+            }
+
+            return User;
+        }
+      
         [HttpPut("{id}")]
         public IActionResult PutUser(string id, User user)
         {

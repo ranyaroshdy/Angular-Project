@@ -8,23 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using AngularProjectAPI.Data;
 using AngularProjectAPI.Models;
 using AngularProjectAPI.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace AngularProjectAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]    
     public class ProductsController : ControllerBase
     {
         private readonly IRepository<Product, int,string> ProductReposatory;
+       // private readonly UserManager<User> UserManagerr;
 
-        public ProductsController(IRepository<Product, int, string> _ProductReposatory)
+
+        public ProductsController(IRepository<Product, int, string> _ProductReposatory/*, UserManager<User> _UserManager*/)
         {
             ProductReposatory = _ProductReposatory;
+            //UserManagerr = _UserManager;
         }
         // GET: api/Products
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetProducts()
         {
+            //var user = await UserManagerr.GetUserAsync(HttpContext.User);
             IEnumerable<Product> Products=ProductReposatory.GetAll();
             if(Products.Count()>0)
                 return Products.ToList();

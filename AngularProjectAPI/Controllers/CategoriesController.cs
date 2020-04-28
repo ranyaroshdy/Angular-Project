@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AngularProjectAPI.Models;
 using AngularProjectAPI.Models.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularProjectAPI.Controllers
@@ -14,10 +17,13 @@ namespace AngularProjectAPI.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly IRepository<Category, int, string> CategoryRepository;
+        private readonly UserManager<User> UserManagerr;
 
-        public CategoriesController(IRepository<Category, int, string> _categoryRepository)
+
+        public CategoriesController(IRepository<Category, int, string> _categoryRepository, UserManager<User> _UserManager)
         {
             CategoryRepository = _categoryRepository;
+            UserManagerr = _UserManager;
         }
         [HttpGet]
         public ActionResult<IEnumerable<Category>> GetCategories()

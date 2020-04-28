@@ -16,8 +16,18 @@ namespace AngularProjectAPI.Models.Repository
 
         public void Add(OrderDetails orderDetails)
         {
-            Context.OrderDetails.Add(orderDetails);
-            Context.SaveChanges();
+            OrderDetails orderDetailsExist= Context.OrderDetails.Where(o => o.OrderID == orderDetails.OrderID && o.ProductID == orderDetails.ProductID).FirstOrDefault();
+            if (orderDetailsExist != null)
+            {
+                orderDetailsExist.Quantity += 1;
+                Context.Update(orderDetailsExist);
+                Context.SaveChanges();
+            }
+            else
+            {
+                Context.OrderDetails.Add(orderDetails);
+                Context.SaveChanges();
+            }
         }
         ///boolcol=>true/false///
         public void Delete(OrderDetails orderDetails)
@@ -40,6 +50,24 @@ namespace AngularProjectAPI.Models.Repository
         public OrderDetails GetByName(string OrderName)
         {
             throw new Exception("Not Implemented");
+        }
+
+        public int GetProductQuantity(int productID, int orderID)
+        {
+            OrderDetails orderDetails= Context.OrderDetails.Where(o => o.ProductID == productID && o.OrderID == orderID).FirstOrDefault();
+            if (orderDetails != null)
+                return orderDetails.Quantity;
+            return -1;
+        }
+
+        public OrderDetails GetSpesificOrderID(string userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetTotalQuantity(string UserID)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(OrderDetails orderDetails)

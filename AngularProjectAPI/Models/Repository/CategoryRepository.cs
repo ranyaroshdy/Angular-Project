@@ -42,6 +42,21 @@ namespace AngularProjectAPI.Models.Repository
             return Context.Categories.Where(o => o.Name == CategoryName).FirstOrDefault();
         }
 
+        public int GetProductQuantity(int ID1, int ID2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetSpesificOrderID(string userid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetTotalQuantity(string UserID)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Category category)
         {
             Context.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

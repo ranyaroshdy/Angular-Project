@@ -43,6 +43,7 @@ namespace AngularProjectAPI
             services.AddScoped<IRepository<Order, int, string>, OrderRepository>();
             services.AddScoped<IRepository<User, string, string>, UserRepository>();
             services.AddScoped<IRepository<Category, int, string>, CategoryRepository>();
+            services.AddScoped<IRepository<OrderDetails, int, string>, OrderDetailsRepository>();
 
             services.AddAuthentication(x =>
             {
