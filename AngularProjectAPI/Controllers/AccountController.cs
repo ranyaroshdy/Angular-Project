@@ -19,9 +19,42 @@ namespace AngularProjectAPI.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> UserManager;
-        public AccountController(UserManager<User> UserManager)
+        private IPasswordHasher<User> passwordHasher;
+        public AccountController(UserManager<User> UserManager, IPasswordHasher<User> passwordHash)
         {
             this.UserManager = UserManager;
+            passwordHasher = passwordHash;
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> Update(UpdatedUser updatedUser)
+        {
+            User user = await UserManager.FindByIdAsync(updatedUser.id);
+            if (user != null)
+            {
+                if (!string.IsNullOrEmpty(updatedUser.password))
+                    user.PasswordHash = passwordHasher.HashPassword(user, updatedUser.password);
+
+                if (!string.IsNullOrEmpty(updatedUser.Image))
+                    user.Image = updatedUser.Image;
+
+                if (!string.IsNullOrEmpty(updatedUser.Email))
+                    user.Email = updatedUser.Email;
+
+                if (!string.IsNullOrEmpty(updatedUser.password))
+                {
+                    IdentityResult result = await UserManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+            }
+            else
+                NotFound();
+
+            return Ok(user);
         }
 
         [HttpPost]
