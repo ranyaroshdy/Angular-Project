@@ -13,4 +13,5 @@ namespace AngularProjectAPI.Models
         public string Email;
 
     }
+
 }
