@@ -42,7 +42,7 @@ namespace AngularProjectAPI.Controllers
                 if (!string.IsNullOrEmpty(updatedUser.Email))
                     user.Email = updatedUser.Email;
 
-                if (!string.IsNullOrEmpty(updatedUser.password))
+                if (!string.IsNullOrEmpty(updatedUser.password) || !string.IsNullOrEmpty(updatedUser.Email) || !string.IsNullOrEmpty(updatedUser.password) || !string.IsNullOrEmpty(updatedUser.Image))
                 {
                     IdentityResult result = await UserManager.UpdateAsync(user);
                     if (result.Succeeded)
