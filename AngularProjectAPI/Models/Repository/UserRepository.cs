@@ -58,7 +58,12 @@ namespace AngularProjectAPI.Models.Repository
 
         public void Update(User user)
         {
-            Context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var user1 = Context.Users.Find(user.Id);
+            user1.UserName = user.UserName;
+            user1.Email = user.Email;
+            Context.Users.Update(user1);
+
+            //Context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             Context.SaveChanges();
         }
     }

@@ -73,6 +73,7 @@ namespace AngularProjectAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult PutUser(string id, User user)
         {
+            Console.WriteLine($"Before First Id {id} and User id is : {user.Id}");
             if (id != user.Id)
             {
                 return BadRequest();
