@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AngularProjectAPI.Data;
 using AngularProjectAPI.Models;
 using AngularProjectAPI.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -18,11 +19,13 @@ namespace AngularProjectAPI.Controllers
     {
         private readonly IRepository<Order, int, string> OrderRepository;
         private readonly UserManager<User> UserManagerr;
+        private readonly ApplicationDbContext Context;
 
-        public OrdersController(IRepository<Order, int, string> _OrderRepository, UserManager<User> _UserManager)
+        public OrdersController(IRepository<Order, int, string> _OrderRepository, UserManager<User> _UserManager,ApplicationDbContext _context)
         {
             OrderRepository = _OrderRepository;
             UserManagerr = _UserManager;
+            Context = _context;
         }
         [HttpGet]
         public ActionResult<IEnumerable<Order>> GetOrders()
@@ -57,7 +60,67 @@ namespace AngularProjectAPI.Controllers
             }
             return order.OrderID;
         }
-        
+        [Route("GetCurrentOrderDetails")]
+        [HttpGet]
+        public ActionResult<Order> GetCurrentOrderDetails()
+        {
+            var UserClaims = HttpContext.User.Claims.ToList();
+            var UserID = UserClaims[4].Value;
+            var order = OrderRepository.GetSpesificOrderID(UserID);
+            if (order != null)
+            {
+                var CurrOrder = OrderRepository.GetById(order.OrderID);
+                return CurrOrder;
+            }
+            return null;
+        }        
+        [Route("GetPendingOrders")]
+        [HttpGet]
+        public ActionResult<List<Order>> GetPendingOrders()
+        {
+            var UserClaims = HttpContext.User.Claims.ToList();
+            var UserID = UserClaims[4].Value;
+            var orders = OrderRepository.GetAllPending(UserID);
+            if (orders == null)
+                return null;                      
+            return orders;
+        }
+        [Route("GetRejectedOrders")]
+        [HttpGet]
+        public ActionResult<List<Order>> GetRejectedOrders()
+        {
+            var UserClaims = HttpContext.User.Claims.ToList();
+            var UserID = UserClaims[4].Value;
+            var orders = OrderRepository.GetAllRejected(UserID);
+            if (orders == null)
+                return null;
+            return orders;
+        }
+        [Route("GetAcceptedOrders")]
+        [HttpGet]
+        public ActionResult<List<Order>> GetAcceptedOrders()
+        {
+            var UserClaims = HttpContext.User.Claims.ToList();
+            var UserID = UserClaims[4].Value;
+            var orders = OrderRepository.GetAllAccepted(UserID);
+            if (orders == null)
+                return null;
+            return orders;
+        }
+        [Route("CheckOut/{id}")]
+        [HttpGet]
+        public ActionResult<int> CheckOut(int id)
+        {
+            OrderRepository.CheckOut(id);
+            return id;
+        }
+        [Route("CancelOrder/{id}")]
+        [HttpGet]
+        public ActionResult<int> CancelOrder(int id)
+        {
+            OrderRepository.Cancel(id);
+            return id;
+        }
         [Route("GetTotalQuantity/{Userid}")]
         [HttpGet]
         public async Task<ActionResult<int>> GetTotalQuantity(string Userid)
@@ -77,10 +140,9 @@ namespace AngularProjectAPI.Controllers
             {
                 return BadRequest();
             }
-            if (!OrderExists(id))
-            {
+            var existOrder=Context.Orders.Find(id);
+            if (existOrder == null)
                 return NotFound();
-            }
             OrderRepository.Update(order);
             return NoContent();
         }

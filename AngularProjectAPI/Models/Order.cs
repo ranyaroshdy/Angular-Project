@@ -15,7 +15,7 @@ namespace AngularProjectAPI.Models
         public int OrderID { get; set; }
         public string State { get; set; }
         public DateTime OrderDate { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public double? TotalPrice { get; set; }
         public bool IsCanceled { get; set; } = false;
 
         [ForeignKey("User")]
@@ -23,7 +23,5 @@ namespace AngularProjectAPI.Models
         public virtual User OrderOwner { get; set; }
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
         public bool checkout { get; set; } = false;
-
-
     }
 }

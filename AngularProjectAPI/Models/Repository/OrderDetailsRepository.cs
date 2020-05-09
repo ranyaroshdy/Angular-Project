@@ -1,4 +1,5 @@
 ﻿using AngularProjectAPI.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,17 @@ namespace AngularProjectAPI.Models.Repository
             OrderDetails orderDetailsExist= Context.OrderDetails.Where(o => o.OrderID == orderDetails.OrderID && o.ProductID == orderDetails.ProductID).FirstOrDefault();
             if (orderDetailsExist != null)
             {
-                orderDetailsExist.Quantity += 1;
-                Context.Update(orderDetailsExist);
+                if (orderDetailsExist.IsCanceled == false)
+                {
+                    orderDetailsExist.Quantity += 1;
+                    Context.Update(orderDetailsExist);
+                }
+                else
+                {
+                    orderDetailsExist.IsCanceled = false;
+                    orderDetailsExist.Quantity = 1;
+                    Context.Update(orderDetailsExist);
+                }
                 Context.SaveChanges();
             }
             else
@@ -29,6 +39,17 @@ namespace AngularProjectAPI.Models.Repository
                 Context.SaveChanges();
             }
         }
+
+        public void Cancel(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CheckOut(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         ///boolcol=>true/false///
         public void Delete(OrderDetails orderDetails)
         {
@@ -40,6 +61,21 @@ namespace AngularProjectAPI.Models.Repository
         public IEnumerable<OrderDetails> GetAll()
         {
             return Context.OrderDetails.ToList();
+        }
+
+        public List<OrderDetails> GetAllAccepted(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<OrderDetails> GetAllPending(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<OrderDetails> GetAllRejected(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public OrderDetails GetById(int id)
@@ -56,7 +92,7 @@ namespace AngularProjectAPI.Models.Repository
         {
             OrderDetails orderDetails= Context.OrderDetails.Where(o => o.ProductID == productID && o.OrderID == orderID).FirstOrDefault();
             if (orderDetails != null)
-                return orderDetails.Quantity;
+                return Convert.ToInt32(orderDetails.Quantity);
             return -1;
         }
 
@@ -68,6 +104,14 @@ namespace AngularProjectAPI.Models.Repository
         public int GetTotalQuantity(string UserID)
         {
             throw new NotImplementedException();
+        }
+
+        public void RemoveProductfromOrder(int orderID, int productID)
+        {
+            OrderDetails orderDetails = Context.OrderDetails.Where(o => o.OrderID == orderID && o.ProductID == productID).FirstOrDefault();
+            orderDetails.IsCanceled = true;
+            Context.OrderDetails.Update(orderDetails);
+            Context.SaveChanges();
         }
 
         public void Update(OrderDetails orderDetails)

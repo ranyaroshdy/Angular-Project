@@ -20,6 +20,16 @@ namespace AngularProjectAPI.Models.Repository
             Context.SaveChanges();
         }
 
+        public void Cancel(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CheckOut(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(Category category)
         {
             category.IsDeleted = true;
@@ -30,6 +40,21 @@ namespace AngularProjectAPI.Models.Repository
         public IEnumerable<Category> GetAll()
         {
             return Context.Categories.ToList();
+        }
+
+        public List<Category> GetAllAccepted(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Category> GetAllPending(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Category> GetAllRejected(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public Category GetById(int id)
@@ -53,6 +78,11 @@ namespace AngularProjectAPI.Models.Repository
         }
 
         public int GetTotalQuantity(string UserID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveProductfromOrder(int orderID, int productID)
         {
             throw new NotImplementedException();
         }

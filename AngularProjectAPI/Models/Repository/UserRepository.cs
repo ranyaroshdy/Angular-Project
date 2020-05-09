@@ -20,6 +20,16 @@ namespace AngularProjectAPI.Models.Repository
             Context.SaveChanges();
         }
 
+        public void Cancel(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CheckOut(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(User user)
         {
             Context.Users.Remove(user);
@@ -29,6 +39,21 @@ namespace AngularProjectAPI.Models.Repository
         public IEnumerable<User> GetAll()
         {
             return Context.Users.ToList();
+        }
+
+        public List<User> GetAllAccepted(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> GetAllPending(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> GetAllRejected(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public User GetById(string id)
@@ -52,6 +77,11 @@ namespace AngularProjectAPI.Models.Repository
         }
 
         public string GetTotalQuantity(string UserID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveProductfromOrder(string orderID, string productID)
         {
             throw new NotImplementedException();
         }

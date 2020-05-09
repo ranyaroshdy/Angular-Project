@@ -16,5 +16,11 @@ namespace AngularProjectAPI.Models.Repository
         T GetSpesificOrderID(string userid);
         Tkey GetProductQuantity(Tkey ID1, Tkey ID2);
         Tkey GetTotalQuantity(TkeySec UserID);
+        void CheckOut(Tkey id);
+        void Cancel(Tkey id);
+        void RemoveProductfromOrder(Tkey orderID, Tkey productID);
+        List<T> GetAllPending(string id);
+        List<T> GetAllAccepted(string id);
+        List<T> GetAllRejected(string id);
     }
 }

@@ -15,7 +15,7 @@ namespace AngularProjectAPI.Models
         [Key]
         [Column(Order = 2)]
         public int ProductID { get; set; }
-        public short Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [ForeignKey("OrderID")]
         public virtual Order Order { get; set; }
@@ -23,7 +23,6 @@ namespace AngularProjectAPI.Models
         [ForeignKey("ProductID")]
         public virtual Product Product { get; set; }
         public bool IsCanceled { get; set; } = false;
-
-        
+        public double SubTotal { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using AngularProjectAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AngularProjectAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200428074311_priceCalc")]
+    partial class priceCalc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,8 +61,8 @@ namespace AngularProjectAPI.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("TotalPrice")
-                        .HasColumnType("float");
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("checkout")
                         .HasColumnType("bit");
@@ -84,9 +86,6 @@ namespace AngularProjectAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<double>("Quantity")
-                        .HasColumnType("float");
-
-                    b.Property<double>("SubTotal")
                         .HasColumnType("float");
 
                     b.HasKey("OrderID", "ProductID");
@@ -115,7 +114,7 @@ namespace AngularProjectAPI.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<double?>("Price")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<string>("Title")

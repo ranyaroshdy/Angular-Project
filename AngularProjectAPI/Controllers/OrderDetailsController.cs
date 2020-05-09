@@ -89,6 +89,12 @@ namespace AngularProjectAPI.Controllers
         {
             return OrderDetailsRepository.GetProductQuantity(productID, orderID);
         }
-
+        [Route("removeProduct/OrderID={orderID}&ProductID={productID}")]
+        [HttpGet]
+        public ActionResult<int> RemoveProductfromOrder(int orderID,int productID)
+        {
+             OrderDetailsRepository.RemoveProductfromOrder(orderID, productID);
+            return Ok();
+        }
     }
 }

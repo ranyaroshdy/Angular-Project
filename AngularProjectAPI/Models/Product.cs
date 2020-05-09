@@ -15,7 +15,7 @@ namespace AngularProjectAPI.Models
         public string Details { get; set; }
         public string Image { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public decimal? Price { get; set; }
+        public double? Price { get; set; }
         [ForeignKey("Category")]
         public int CategoryID { get; set; }
         public virtual Category Category { get; set; }
