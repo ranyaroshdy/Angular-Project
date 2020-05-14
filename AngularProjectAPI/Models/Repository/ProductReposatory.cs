@@ -39,7 +39,7 @@ namespace AngularProjectAPI.Models.Repository
 
         public IEnumerable<Product> GetAll()
         {
-            return Context.Products.ToList();
+            return Context.Products.Where(p=>p.IsDeleted == false).ToList();
         }
 
         public List<Product> GetAllAccepted(string id)
@@ -89,7 +89,14 @@ namespace AngularProjectAPI.Models.Repository
 
         public void Update(Product Object)
         {
-            Context.Entry(Object).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var product1 = Context.Products.Find(product.ProductID);
+            product1.Title = product.Title;
+            product1.Details = product.Details;
+            product1.CategoryID = product.CategoryID;
+            product1.Price = product.Price;
+
+            Context.Products.Update(product1);
+
             Context.SaveChanges();
         }
     }
