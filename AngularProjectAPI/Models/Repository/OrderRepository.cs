@@ -108,11 +108,11 @@ namespace AngularProjectAPI.Models.Repository
             var order = Context.Orders.Include(o => o.OrderDetails).ThenInclude(o => o.Product).Where(o => o.OrderID == id && o.checkout == false && o.IsCanceled == false).FirstOrDefault();
             if (order != null)
             {
-                //var orderr = order.OrderDetails.Where(o => o.IsCanceled == true).ToList();
-                //foreach (var item in orderr)
-                //{
-                //    order.OrderDetails.Remove(item);
-                //}
+                var orderr = order.OrderDetails.Where(o => o.IsCanceled == true).ToList();
+                foreach (var item in orderr)
+                {
+                    order.OrderDetails.Remove(item);
+                }
                 return order;
             }
             return null;
