@@ -16,7 +16,6 @@ namespace AngularProjectAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowOrigin")]
     public class OrdersController : ControllerBase
     {
         private readonly IRepository<Order, int, string> OrderRepository;
@@ -64,7 +63,6 @@ namespace AngularProjectAPI.Controllers
         }
         [Route("GetCurrentOrderDetails")]
         [HttpGet]
-        [EnableCors("AllowOrigin")]
         public ActionResult<Order> GetCurrentOrderDetails()
         {
             var UserClaims = HttpContext.User.Claims.ToList();
