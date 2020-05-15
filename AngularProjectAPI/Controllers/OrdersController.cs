@@ -61,7 +61,7 @@ namespace AngularProjectAPI.Controllers
             }
             return order.OrderID;
         }
-        [Route("GetCurrentOrderDetails")]
+        [Route("GetDetails")]
         [HttpGet]
         public ActionResult<Order> GetCurrentOrderDetails()
         {
