@@ -87,13 +87,14 @@ namespace AngularProjectAPI.Models.Repository
             throw new NotImplementedException();
         }
 
-        public void Update(Product Object)
+        public void Update(Product product)
         {
             var product1 = Context.Products.Find(product.ProductID);
             product1.Title = product.Title;
             product1.Details = product.Details;
             product1.CategoryID = product.CategoryID;
             product1.Price = product.Price;
+            product1.Image = product.Image;
 
             Context.Products.Update(product1);
 
