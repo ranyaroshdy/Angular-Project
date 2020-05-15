@@ -7,6 +7,7 @@ using AngularProjectAPI.Data;
 using AngularProjectAPI.Models;
 using AngularProjectAPI.Models.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace AngularProjectAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class OrdersController : ControllerBase
     {
         private readonly IRepository<Order, int, string> OrderRepository;
@@ -62,6 +64,7 @@ namespace AngularProjectAPI.Controllers
         }
         [Route("GetCurrentOrderDetails")]
         [HttpGet]
+        [EnableCors("AllowOrigin")]
         public ActionResult<Order> GetCurrentOrderDetails()
         {
             var UserClaims = HttpContext.User.Claims.ToList();
