@@ -83,6 +83,7 @@ namespace AngularProjectAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
             app.UseOpenApi();
             app.UseSwaggerUi3();
             app.UseRouting();
