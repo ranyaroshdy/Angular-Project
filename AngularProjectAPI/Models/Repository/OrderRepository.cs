@@ -133,7 +133,7 @@ namespace AngularProjectAPI.Models.Repository
             {
                 OrderDetails orderDetails = Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
                 orderDetails.SubTotal = Convert.ToDouble(q.OrderSubtTotalPrice);
-                Context.OrderDetails.Update(orderDetails);
+                //Context.OrderDetails.Update(orderDetails);
             }
             //Context.SaveChanges();
             //Order o = Context.Orders.Find(id);
