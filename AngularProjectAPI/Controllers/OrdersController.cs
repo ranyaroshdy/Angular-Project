@@ -36,6 +36,20 @@ namespace AngularProjectAPI.Controllers
                 return orders.ToList();
             return NotFound();
         }
+        [Route("GetDetails")]
+        [HttpGet]
+        public ActionResult<Order> GetDetails()
+        {
+            var UserClaims = HttpContext.User.Claims.ToList();
+            var UserID = UserClaims[4].Value;
+            var order = OrderRepository.GetSpesificOrderID(UserID);
+            //if (order != null)
+            //{
+            //    var CurrOrder = OrderRepository.GetById(order.OrderID);
+            //    return CurrOrder;
+            //}
+            return order;
+        }
 
         [HttpGet("{id}")]
         public ActionResult<Order> GetOrder(int id)
@@ -61,20 +75,7 @@ namespace AngularProjectAPI.Controllers
             }
             return order.OrderID;
         }
-        [Route("GetDetails")]
-        [HttpGet]
-        public ActionResult<Order> GetCurrentOrderDetails()
-        {
-            var UserClaims = HttpContext.User.Claims.ToList();
-            var UserID = UserClaims[4].Value;
-            var order = OrderRepository.GetSpesificOrderID(UserID);
-            if (order != null)
-            {
-                var CurrOrder = OrderRepository.GetById(order.OrderID);
-                return CurrOrder;
-            }
-            return null;
-        }        
+            
         [Route("GetPendingOrders")]
         [HttpGet]
         public ActionResult<List<Order>> GetPendingOrders()
