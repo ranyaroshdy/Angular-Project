@@ -131,7 +131,7 @@ namespace AngularProjectAPI.Models.Repository
 
             foreach (var q in query)
             {
-                //OrderDetails orderDetails = Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
+                OrderDetails orderDetails = Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
                 //orderDetails.SubTotal = Convert.ToDouble(q.OrderSubtTotalPrice);
                 //Context.OrderDetails.Update(orderDetails);
             }
