@@ -88,7 +88,7 @@ namespace AngularProjectAPI
             app.UseSwaggerUi3();
             app.UseRouting();
 
-            app.UseCors(builder=> builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthentication();
             app.UseAuthorization();
 
