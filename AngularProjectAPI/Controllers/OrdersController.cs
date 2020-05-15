@@ -64,8 +64,9 @@ namespace AngularProjectAPI.Controllers
         [HttpGet]
         public ActionResult<Order> GetCurrentOrderDetails()
         {
-            var UserClaims = HttpContext.User.Claims.ToList();
-            var UserID = UserClaims[4].Value;
+            //var UserClaims = HttpContext.User.Claims.ToList();
+            //var UserID = UserClaims[4].Value;
+            var UserID = "20be63b4-0ca0-4dad-9dd9-dff98992ee89";
             var order = OrderRepository.GetSpesificOrderID(UserID);
             if (order != null)
             {
