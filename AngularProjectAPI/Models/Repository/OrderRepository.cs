@@ -124,17 +124,24 @@ namespace AngularProjectAPI.Models.Repository
         }
         public void CalculateToTalPrice(int id)
         {
-         
-            var query = from x in Context.OrderDetails.Include(o=>o.Product)
-                        where x.OrderID == id && x.IsCanceled==false
-                        select new {OrderID=x.OrderID,ProductID=x.ProductID, OrderSubtTotalPrice = (x.Quantity) * (x.Product.Price)};
 
-            foreach (var q in query)
+            //var query = from x in Context.OrderDetails.Include(o=>o.Product)
+            //            where x.OrderID == id && x.IsCanceled==false
+            //            select new {OrderID=x.OrderID,ProductID=x.ProductID, OrderSubtTotalPrice = (x.Quantity) * (x.Product.Price)};
+
+            var query = Context.OrderDetails.Include(o => o.Product).Where(o => o.OrderID == id && o.IsCanceled == false).ToList();
+
+            foreach(var orderd in query)
             {
-                OrderDetails orderDetails = Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
-                //orderDetails.SubTotal = Convert.ToDouble(q.OrderSubtTotalPrice);
-                //Context.OrderDetails.Update(orderDetails);
+                orderd.SubTotal = Convert.ToDouble(orderd.Quantity * orderd.Product.Price);
             }
+
+            //foreach (var q in query)
+            //{
+            //    OrderDetails orderDetails = Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
+            //    //orderDetails.SubTotal = Convert.ToDouble(q.OrderSubtTotalPrice);
+            //    //Context.OrderDetails.Update(orderDetails);
+            //}
             //Context.SaveChanges();
             //Order o = Context.Orders.Find(id);
             //o.TotalPrice = Context.OrderDetails.Where(o=>o.IsCanceled==false && o.OrderID==id).Sum(o => o.SubTotal);
