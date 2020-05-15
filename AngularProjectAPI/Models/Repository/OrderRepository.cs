@@ -136,10 +136,10 @@ namespace AngularProjectAPI.Models.Repository
                 Context.OrderDetails.Update(orderDetails);
             }
             Context.SaveChanges();
-            Order o = Context.Orders.Find(id);
-            o.TotalPrice = Context.OrderDetails.Where(o=>o.IsCanceled==false && o.OrderID==id).Sum(o => o.SubTotal);
-            Context.Orders.Update(o);
-            Context.SaveChanges();
+            //Order o = Context.Orders.Find(id);
+            //o.TotalPrice = Context.OrderDetails.Where(o=>o.IsCanceled==false && o.OrderID==id).Sum(o => o.SubTotal);
+            //Context.Orders.Update(o);
+            //Context.SaveChanges();
         }
 
         public Order GetByName(string OrderName)
