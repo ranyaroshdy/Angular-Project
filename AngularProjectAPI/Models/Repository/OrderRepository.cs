@@ -129,13 +129,13 @@ namespace AngularProjectAPI.Models.Repository
                         where x.OrderID == id && x.IsCanceled==false
                         select new {OrderID=x.OrderID,ProductID=x.ProductID, OrderSubtTotalPrice = (x.Quantity) * (x.Product.Price)};
  
-            foreach (var q in query)
-            {
-                OrderDetails orderDetails= Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
-                orderDetails.SubTotal = Convert.ToDouble(q.OrderSubtTotalPrice);
-                Context.OrderDetails.Update(orderDetails);
-            }
-            Context.SaveChanges();
+            //foreach (var q in query)
+            //{
+            //    OrderDetails orderDetails= Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
+            //    orderDetails.SubTotal = Convert.ToDouble(q.OrderSubtTotalPrice);
+            //    Context.OrderDetails.Update(orderDetails);
+            //}
+            //Context.SaveChanges();
             //Order o = Context.Orders.Find(id);
             //o.TotalPrice = Context.OrderDetails.Where(o=>o.IsCanceled==false && o.OrderID==id).Sum(o => o.SubTotal);
             //Context.Orders.Update(o);
