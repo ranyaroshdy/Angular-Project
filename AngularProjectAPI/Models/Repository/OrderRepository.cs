@@ -134,8 +134,10 @@ namespace AngularProjectAPI.Models.Repository
             foreach(var orderd in query)
             {
                 orderd.SubTotal = Convert.ToDouble(orderd.Quantity * orderd.Product.Price);
+                Context.OrderDetails.Update(orderd);
+                
             }
-
+            Context.SaveChanges();
             //foreach (var q in query)
             //{
             //    OrderDetails orderDetails = Context.OrderDetails.Where(o => o.ProductID == q.ProductID && o.OrderID == q.OrderID).FirstOrDefault();
